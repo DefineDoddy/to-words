@@ -8,6 +8,7 @@ export const DefaultConverterOptions: ConverterOptions = {
   ignoreDecimal: false,
   ignoreZeroCurrency: false,
   doNotAddOnly: false,
+  fractionalDigits: true,
 };
 
 export const DefaultToWordsOptions: ToWordsOptions = {
@@ -84,7 +85,8 @@ export class ToWords {
       if (!ignoreZero) {
         wordsWithDecimal.push(locale.config.texts.point);
       }
-      if (split[1].startsWith('0') && !locale.config?.decimalLengthWordMapping) {
+      const forceFractionalDigits = this.options.converterOptions?.fractionalDigits;
+      if ((split[1].startsWith('0') || forceFractionalDigits) && !locale.config?.decimalLengthWordMapping) {
         const zeroWords = [];
         for (const num of split[1]) {
           zeroWords.push(...this.convertInternal(Number(num), true));
