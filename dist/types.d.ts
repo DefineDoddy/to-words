@@ -16,6 +16,7 @@ export type ConverterOptions = {
     ignoreZeroCurrency?: boolean;
     doNotAddOnly?: boolean;
     currencyOptions?: CurrencyOptions;
+    fractionalDigits?: boolean;
 };
 export type ToWordsOptions = {
     localeCode?: string;

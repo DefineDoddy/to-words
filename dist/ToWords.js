@@ -11,6 +11,7 @@ exports.DefaultConverterOptions = {
     ignoreDecimal: false,
     ignoreZeroCurrency: false,
     doNotAddOnly: false,
+    fractionalDigits: true,
 };
 exports.DefaultToWordsOptions = {
     localeCode: 'en-IN',
@@ -57,7 +58,7 @@ class ToWords {
         return words.join(' ');
     }
     convertNumber(number) {
-        var _a, _b, _c;
+        var _a, _b, _c, _d;
         const locale = this.getLocale();
         const isNegativeNumber = number < 0;
         if (isNegativeNumber) {
@@ -75,7 +76,8 @@ class ToWords {
             if (!ignoreZero) {
                 wordsWithDecimal.push(locale.config.texts.point);
             }
-            if (split[1].startsWith('0') && !((_a = locale.config) === null || _a === void 0 ? void 0 : _a.decimalLengthWordMapping)) {
+            const forceFractionalDigits = (_a = this.options.converterOptions) === null || _a === void 0 ? void 0 : _a.fractionalDigits;
+            if ((split[1].startsWith('0') || forceFractionalDigits) && !((_b = locale.config) === null || _b === void 0 ? void 0 : _b.decimalLengthWordMapping)) {
                 const zeroWords = [];
                 for (const num of split[1]) {
                     zeroWords.push(...this.convertInternal(Number(num), true));
@@ -84,7 +86,7 @@ class ToWords {
             }
             else {
                 wordsWithDecimal.push(...this.convertInternal(Number(split[1]), true));
-                const decimalLengthWord = (_c = (_b = locale.config) === null || _b === void 0 ? void 0 : _b.decimalLengthWordMapping) === null || _c === void 0 ? void 0 : _c[split[1].length];
+                const decimalLengthWord = (_d = (_c = locale.config) === null || _c === void 0 ? void 0 : _c.decimalLengthWordMapping) === null || _d === void 0 ? void 0 : _d[split[1].length];
                 if (decimalLengthWord) {
                     wordsWithDecimal.push(decimalLengthWord);
                 }
