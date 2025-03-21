@@ -17,6 +17,7 @@ export type ConverterOptions = {
   ignoreZeroCurrency?: boolean;
   doNotAddOnly?: boolean; // applicable only when currency = true
   currencyOptions?: CurrencyOptions; // applicable only when currency = true, overwrites options from locales
+  fractionalDigits?: boolean; // digits after decimal points are converted into respective numbers individually
 };
 
 export type ToWordsOptions = {
